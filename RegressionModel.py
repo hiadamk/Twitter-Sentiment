@@ -36,7 +36,7 @@ class RegressionModel:
             csv_reader = csv.reader(csv_file, delimiter=',')
             for row in csv_reader:
                 try:
-                    self.tweetCorpus.append(row[5])
+                    self.tweetCorpus.append(row[1])
 
                 except UnicodeDecodeError:
                     continue
