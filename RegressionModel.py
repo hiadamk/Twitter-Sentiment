@@ -6,8 +6,9 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize
 
+
+# Class for performing linear regression
 class RegressionModel:
     training_values = []
     training_outputs = []
@@ -21,12 +22,14 @@ class RegressionModel:
     cv = None
     stop_words = set(stopwords.words('english'))
 
+    # Cleans tweets
     def preprocess_data(self, data):
         data = [re.sub(r"(\.)|(\;)|(\:)|(\!)|(\')|(\?)|(\,)|(\")|(\()|(\))|(\[)|(\])|@(\w){1,15}|(<br\s*/><br\s*/>)|(\-)|(\/)"
-                       , "",line.lower()) for line in data]
+                       , "", line.lower()) for line in data]
 
         return data
 
+    # Constructor to read tweets from csv file and train linear regression model
     def __init__(self):
         print('Text classifier created')
         with open('Utils/training.csv', encoding='utf-8', errors='ignore') as csv_file:
@@ -71,6 +74,7 @@ class RegressionModel:
         print("Final Accuracy: %s"
               % accuracy_score(self.test_outputs, final_model.predict(X_test)))
 
+    # Predicts whether a tweet is positive or negative
     def classify_text(self, text):
         t = TweetHandler.clean_tweet(text)
         t = self.preprocess_data([t])

@@ -1,24 +1,22 @@
 import tweepy
-import re
 import json
 import collections
-from examples.streaming import StdOutListener
-
 import Credentials
 import TweetHandler
 from RegressionModel import RegressionModel
 import time
-import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 
+
+# Class which listens for tweets on the stream and classifies them
 class MyStreamListener(tweepy.StreamListener):
     pos_tweets = 0
     neg_tweet = 0
     total = 0
     regression_model = RegressionModel()
     start_time = None
-    duration =20
+    duration = 82800
     words = []
     stop_words = None
 
@@ -29,7 +27,7 @@ class MyStreamListener(tweepy.StreamListener):
         self.stop_words.add('amp')
         self.stop_words.add('rt')
 
-    # When there is a new tweet detected in the stream it will perform the following actions (generate a new tweet)
+    # When there is a new tweet detected in the stream it will perform the following actions
     def on_status(self, status):
 
         if time.time() > self.start_time + self.duration:
@@ -47,14 +45,9 @@ class MyStreamListener(tweepy.StreamListener):
         else:
 
             j = json.loads(json.dumps(status._json))
-            # tweeter = "@" + j["user"]["screen_name"]
-            # print("JSON: " + j["user"])
             text = status.text
 
-            # print("TEXT: " + text)
-
             text = TweetHandler.clean_tweet(text.lower())
-            # self.words.extend(word_tokenize(text))
             word_tokens = word_tokenize(text)
             filtered_sentence = [w for w in word_tokens if not w in self.stop_words]
             self.words.extend(filtered_sentence)
@@ -62,15 +55,10 @@ class MyStreamListener(tweepy.StreamListener):
             res = self.regression_model.classify_text(text)
             if res == 1:
                 self.pos_tweets +=1
-                sent = 'Positive'
+                # sent = 'Positive'
             else:
                 self.neg_tweet +=1
-                sent = 'Negative'
+                # sent = 'Negative'
             self.total += 1
-            # if self.total % 10000 == 0:
-            #     print('POSITIVE TWEETS: ', self.pos_tweets)
-            #     print('NEGATIVE TWEETS: ', self.neg_tweet)
-            #     print('%positive: ', self.pos_tweets/self.total)
-            print(sent + " " + text)
             return True
 

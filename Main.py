@@ -5,24 +5,9 @@ import tweepy
 myStreamListener = MyStreamListener()
 myStream = tweepy.Stream(auth=Credentials.api.auth, listener=myStreamListener)
 
-
-def tweet_sent():
-    pos = (myStreamListener.pos_tweets / myStreamListener.total) * 100
-    tweet = "In my lifestime, I've sampled " + myStreamListener.total + " tweets and " + pos + "% of them were positive"
-    Credentials.api.update_status(tweet)
-    print(tweet)
-
-def kill_stream():
-    myStream.disconnect()
-    # pos = (myStreamListener.pos_tweets / myStreamListener.total) * 100
-    # tweet = "In my lifestime, I've sampled " + myStreamListener.total + " tweets and " + pos + "% of them were positive"
-    # Credentials.api.update_status(tweet)
-    # print(tweet)
-
 print('Stream Started')
-# myStream.timeout
 
-
+# Filters english tweets based on 400 most common twitter words
 myStream.filter(languages=["en"], track=["a", "the", "i", "you", "u", "to", "and", "is", "in", "it", "you",
                                              "of", "for", "on", "my", "that", "at", "with", "me", "do", "have",
                                              "just", "this", "be", "so", "are", "not", "was", "but", "out"
@@ -79,12 +64,3 @@ myStream.filter(languages=["en"], track=["a", "the", "i", "you", "u", "to", "and
                                              "started", "minutes", "weather", "later", "set", "room", "such",
                                              "without", "sunday", "high", "change", "tweets", "omg", "black",
                                              "meeting", "kind"])
-
-# t = Timer(60.0, kill_stream())
-# t.start() # after 30 seconds, "hello, world" will be printed
-# schedule.every(5).minutes.do(tweet_sent())
-
-
-# except Exception:
-#     print("Tried to break but still here")
-#     continue

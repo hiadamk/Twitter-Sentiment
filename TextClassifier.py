@@ -1,8 +1,8 @@
-from textblob import TextBlob
 from textblob.classifiers import NaiveBayesClassifier
 import csv
 
 
+# Poor performing naive bayes classifier
 class TextClassifier:
     tweetCorpus = []
     training = []
