@@ -5,7 +5,8 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
-
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
 
 class RegressionModel:
     training_values = []
@@ -18,10 +19,11 @@ class RegressionModel:
 
     classifier = None
     cv = None
+    stop_words = set(stopwords.words('english'))
 
     def preprocess_data(self, data):
-        data = [re.sub(r"(\.)|(\;)|(\:)|(\!)|(\')|(\?)|(\,)|(\")|(\()|(\))|(\[)|(\])|@(\w){1,15}", "",
-                       line.lower()) for line in data]
+        data = [re.sub(r"(\.)|(\;)|(\:)|(\!)|(\')|(\?)|(\,)|(\")|(\()|(\))|(\[)|(\])|@(\w){1,15}|(<br\s*/><br\s*/>)|(\-)|(\/)"
+                       , "",line.lower()) for line in data]
 
         return data
 
@@ -74,8 +76,8 @@ class RegressionModel:
         t = self.preprocess_data([t])
         text_matrix = self.cv.transform(t)
         result = self.classifier.predict(text_matrix)
-        print(result)
 
+        return result[0].item()
 
 
 if __name__ == "__main__":
