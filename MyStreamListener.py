@@ -16,7 +16,7 @@ class MyStreamListener(tweepy.StreamListener):
     total = 0
     regression_model = RegressionModel()
     start_time = None
-    duration = 82800
+    duration = 30
     words = []
     stop_words = None
 

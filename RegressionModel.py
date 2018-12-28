@@ -41,11 +41,11 @@ class RegressionModel:
                 except UnicodeDecodeError:
                     continue
 
-        self.training_values = self.tweetCorpus[:640000]
-        self.training_values.extend(self.tweetCorpus[800000:1440000])
+        self.training_values = self.tweetCorpus[:350000]
+        self.training_values.extend(self.tweetCorpus[500000:850000])
 
-        self.test_values = self.tweetCorpus[640000:800000]
-        self.test_values.extend(self.tweetCorpus[1440000:1600000])
+        self.test_values = self.tweetCorpus[350000:500000]
+        self.test_values.extend(self.tweetCorpus[850000:1000000])
 
         print(len(self.test_values))
         print(len(self.training_values))
@@ -56,8 +56,8 @@ class RegressionModel:
         self.test_values = self.preprocess_data(self.test_values)
         print("Processing test values done")
 
-        self.training_outputs = [0 if i < 640000 else 1 for i in range(1280000)]
-        self.test_outputs = [0 if i < 160000 else 1 for i in range(320000)]
+        self.training_outputs = [0 if i < 350000 else 1 for i in range(700000)]
+        self.test_outputs = [0 if i < 150000 else 1 for i in range(300000)]
 
         self.cv = CountVectorizer(binary=True)
         self.cv.fit(self.training_values)
@@ -68,7 +68,7 @@ class RegressionModel:
             X, self.training_outputs, train_size=0.80
         )
 
-        final_model = LogisticRegression(C=0.5)
+        final_model = LogisticRegression(C=0.25)
         final_model.fit(X, self.training_outputs)
         self.classifier = final_model
         print("Final Accuracy: %s"
