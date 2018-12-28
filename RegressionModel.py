@@ -32,7 +32,7 @@ class RegressionModel:
     # Constructor to read tweets from csv file and train linear regression model
     def __init__(self):
         print('Text classifier created')
-        with open('Utils/training.csv', encoding='utf-8', errors='ignore') as csv_file:
+        with open('testout.csv', encoding='utf-8', errors='ignore') as csv_file:
             csv_reader = csv.reader(csv_file, delimiter=',')
             for row in csv_reader:
                 try:
@@ -41,11 +41,11 @@ class RegressionModel:
                 except UnicodeDecodeError:
                     continue
 
-        self.training_values = self.tweetCorpus[:350000]
-        self.training_values.extend(self.tweetCorpus[500000:850000])
+        self.training_values = self.tweetCorpus[:35000]
+        self.training_values.extend(self.tweetCorpus[50000:85000])
 
-        self.test_values = self.tweetCorpus[350000:500000]
-        self.test_values.extend(self.tweetCorpus[850000:1000000])
+        self.test_values = self.tweetCorpus[35000:50000]
+        self.test_values.extend(self.tweetCorpus[85000:100000])
 
         print(len(self.test_values))
         print(len(self.training_values))
@@ -56,8 +56,8 @@ class RegressionModel:
         self.test_values = self.preprocess_data(self.test_values)
         print("Processing test values done")
 
-        self.training_outputs = [0 if i < 350000 else 1 for i in range(700000)]
-        self.test_outputs = [0 if i < 150000 else 1 for i in range(300000)]
+        self.training_outputs = [0 if i < 35000 else 1 for i in range(70000)]
+        self.test_outputs = [0 if i < 15000 else 1 for i in range(30000)]
 
         self.cv = CountVectorizer(binary=True)
         self.cv.fit(self.training_values)

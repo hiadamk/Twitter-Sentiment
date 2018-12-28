@@ -16,7 +16,7 @@ class MyStreamListener(tweepy.StreamListener):
     total = 0
     regression_model = RegressionModel()
     start_time = None
-    duration = 30
+    duration = 79200
     words = []
     stop_words = None
 
@@ -38,7 +38,7 @@ class MyStreamListener(tweepy.StreamListener):
             five = cnt.most_common(5)
             formatted = ['%s (%d occurrences)' % (t[0], t[1]) for t in five]
             pos = (self.pos_tweets / self.total) * 100
-            tweet = "Today, I sampled " + str(self.total) + " tweets and " + str(round(pos)) + "% of them were positive. The ten most common words were " + str(formatted)
+            tweet = "Today, I sampled " + str(self.total) + " tweets and " + str(round(pos)) + "% of them were positive. The five most common words were " + str(formatted).replace('[', '').replace(']', '').replace("'", "")
             Credentials.api.update_status(tweet)
             print(tweet)
             return False
