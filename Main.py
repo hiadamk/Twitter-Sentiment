@@ -1,8 +1,11 @@
 from MyStreamListener import MyStreamListener
 import Credentials
 import tweepy
+import datetime
 
-Credentials.api.send_direct_message(user_id='1011275787574669312', text='Starting Sentiment Analysis Sir')
+now = datetime.datetime.now()
+
+Credentials.api.update_status('Starting to fetch tweets for: ' + now.strftime("%Y-%m-%d %H:%M"))
 myStreamListener = MyStreamListener()
 myStream = tweepy.Stream(auth=Credentials.api.auth, listener=myStreamListener)
 

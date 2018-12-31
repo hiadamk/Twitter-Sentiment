@@ -1,5 +1,4 @@
 import tweepy
-import json
 import collections
 import Credentials
 import TweetHandler
@@ -16,7 +15,7 @@ class MyStreamListener(tweepy.StreamListener):
     total = 0
     regression_model = RegressionModel()
     start_time = None
-    duration = 79200
+    duration = 18000
     words = []
     stop_words = None
 
@@ -43,8 +42,6 @@ class MyStreamListener(tweepy.StreamListener):
             print(tweet)
             return False
         else:
-
-            j = json.loads(json.dumps(status._json))
             text = status.text
 
             text = TweetHandler.clean_tweet(text.lower())
@@ -55,10 +52,8 @@ class MyStreamListener(tweepy.StreamListener):
             res = self.regression_model.classify_text(text)
             if res == 1:
                 self.pos_tweets +=1
-                # sent = 'Positive'
             else:
                 self.neg_tweet +=1
-                # sent = 'Negative'
             self.total += 1
             return True
 

@@ -32,7 +32,7 @@ class RegressionModel:
     # Constructor to read tweets from csv file and train linear regression model
     def __init__(self):
         print('Text classifier created')
-        with open('testout.csv', encoding='utf-8', errors='ignore') as csv_file:
+        with open('/home/ubuntu/Twitter-Sentiment/testout.csv', encoding='utf-8', errors='ignore') as csv_file:
             csv_reader = csv.reader(csv_file, delimiter=',')
             for row in csv_reader:
                 try:
