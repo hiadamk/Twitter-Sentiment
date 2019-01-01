@@ -11,6 +11,8 @@ My initial approach in sentiment analysis used a naive Bayes classifier however 
 ### Streaming
 The Twitter API makes it very easy to constantly observe tweets based on different parameters such as usernames, locations, keywords etc. I used 400 of the [500 most frequently used words on Twitter](http://techland.time.com/2009/06/08/the-500-most-frequently-used-words-on-twitter/) to track as many common tweets as possible to form an unbiased set of data to evaluate sentiment from. These tweets require pre-processing such as removing links, usernames and punctuation however I found that removing stop-words slightly reduced the accuracy, so I kept the words as they were. Each cleaned tweet is then passed to the trained model which predicts the sentiment of the tweet and stores the result. The program runs for a number of hours and tweets the percentage of tweets it deemed as positive and what the 4 most common words were (after cleaning out some stop words).
 
+### Where to find it
+Currently I am hosting the code on an AWS server so that it runs for as long as it can each day without exceeding the RAM limitations of the free tier on AWS. You can find the account and what it's been tweeting at https://twitter.com/sentiment_b0t
+
 Overall not a difficult project, but an interesting one with loads of small intricate things I had to learn through trial and error.
 
-**Total coding time:** 16 hrs 5 mins (Training 1.6 million tweets over and over makes the world go in slow motion)

@@ -15,7 +15,7 @@ class MyStreamListener(tweepy.StreamListener):
     total = 0
     regression_model = RegressionModel()
     start_time = None
-    duration = 18000
+    duration = 21600
     words = []
     stop_words = None
 
@@ -46,7 +46,7 @@ class MyStreamListener(tweepy.StreamListener):
 
             text = TweetHandler.clean_tweet(text.lower())
             word_tokens = word_tokenize(text)
-            filtered_sentence = [w for w in word_tokens if not w in self.stop_words]
+            filtered_sentence = [w for w in word_tokens if w not in self.stop_words]
             self.words.extend(filtered_sentence)
 
             res = self.regression_model.classify_text(text)
