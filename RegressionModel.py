@@ -24,8 +24,9 @@ class RegressionModel:
 
     # Cleans tweets
     def preprocess_data(self, data):
-        data = [re.sub(r"(\.)|(\;)|(\:)|(\!)|(\')|(\?)|(\,)|(\")|(\()|(\))|(\[)|(\])|@(\w){1,15}|(<br\s*/><br\s*/>)|(\-)|(\/)"
-                       , "", line.lower()) for line in data]
+        data = [re.sub(
+            r"(\.)|(\;)|(\:)|(\!)|(\')|(\?)|(\,)|(\")|(\()|(\))|(\[)|(\])|@(\w){1,15}|(<br\s*/><br\s*/>)|(\-)|(\/)"
+            , "", line.lower()) for line in data]
 
         return data
 
@@ -35,7 +36,6 @@ class RegressionModel:
         with open('/home/ubuntu/Twitter-Sentiment/testout.csv', encoding='utf-8', errors='ignore') as csv_file:
             csv_reader = csv.reader(csv_file, delimiter=',')
             for row in csv_reader:
-
                 self.tweetCorpus.append(row[1])
 
         self.training_values = self.tweetCorpus[:35000]
@@ -43,7 +43,6 @@ class RegressionModel:
 
         self.test_values = self.tweetCorpus[35000:50000]
         self.test_values.extend(self.tweetCorpus[85000:100000])
-
 
         print("Processing starting")
         self.training_values = self.preprocess_data(self.training_values)

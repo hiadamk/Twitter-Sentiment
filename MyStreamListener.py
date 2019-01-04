@@ -11,7 +11,6 @@ from nltk.tokenize import word_tokenize
 # Class which listens for tweets on the stream and classifies them
 class MyStreamListener(tweepy.StreamListener):
     pos_tweets = 0
-    neg_tweet = 0
     total = 0
     regression_model = RegressionModel()
     start_time = None
@@ -25,6 +24,7 @@ class MyStreamListener(tweepy.StreamListener):
         self.stop_words = set(stopwords.words('english'))
         self.stop_words.add('amp')
         self.stop_words.add('rt')
+        self.stop_words.add('like')
 
     # When there is a new tweet detected in the stream it will perform the following actions
     def on_status(self, status):
@@ -52,8 +52,6 @@ class MyStreamListener(tweepy.StreamListener):
             res = self.regression_model.classify_text(text)
             if res == 1:
                 self.pos_tweets +=1
-            else:
-                self.neg_tweet +=1
             self.total += 1
             return True
 
